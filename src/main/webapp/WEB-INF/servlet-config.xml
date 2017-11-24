@@ -9,15 +9,12 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="helloWorldController" class="com.zubtsov.spring.mvc.HelloWorldController"/>
 
-    <context:component-scan base-package="com.zubtsov.spring.mvc" />
-
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="prefix" value="/WEB-INF/jsp/util/" />
         <property name="suffix" value=".jsp" />
     </bean>
-
 </beans>
