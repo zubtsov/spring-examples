@@ -10,8 +10,11 @@
 
     Map<String, String[]> httpParameters = request.getParameterMap();
 
+    Cookie[] cookies = request.getCookies();
+
     request.setAttribute("httpHeaders", httpHeaders);
     request.setAttribute("httpParameters", httpParameters);
+    request.setAttribute("cookies", cookies);
 %>
 
 <html>
@@ -19,10 +22,11 @@
     <style>
         <%@include file="/WEB-INF/css/default.css"%>
     </style>
-    <title>HTTP debug JSP page. Author: Zubtsov Ruslan</title>
+    <title>HTTP debug JSP page (Request tracer). Author: Zubtsov Ruslan</title>
 </head>
 <body>
 
+<b>Characteristics</b>
 <table>
     <tr>
         <th>Characteristic</th>
@@ -40,8 +44,33 @@
         <td>Parameters number: </td>
         <td><%=httpParameters.size()%></td>
     </tr>
+    <tr>
+        <td>Auth type</td>
+        <td><%=request.getAuthType()%></td>
+    </tr>
+    <tr>
+        <td>Context path</td>
+        <td><%=request.getContextPath()%></td>
+    </tr>
+    <tr>
+        <td>Path translated</td>
+        <td><%=request.getPathTranslated()%></td>
+    </tr>
+    <tr>
+        <td>Path info</td>
+        <td><%=request.getPathInfo()%></td>
+    </tr>
+    <tr>
+        <td>Query string</td>
+        <td><%=request.getQueryString()%></td>
+    </tr>
+    <tr>
+        <td>Remote user</td>
+        <td><%=request.getRemoteUser()%></td>
+    </tr>
 </table>
 
+<b>Headers</b>
 <table>
     <tr>
         <th>Header name</th>
@@ -49,12 +78,13 @@
     </tr>
     <c:forEach var="item" items="${httpHeaders.entrySet()}">
         <tr>
-            <td>${item.getKey()}</td>
-            <td>${item.getValue()}</td>
+            <td>${item.key}</td>
+            <td>${item.value}</td>
         </tr>
     </c:forEach>
 </table>
 
+<b>Parameters</b>
 <table>
     <tr>
         <th>Parameter name</th>
@@ -62,8 +92,34 @@
     </tr>
     <c:forEach var="item" items="${httpParameters.entrySet()}">
         <tr>
-            <td>${item.getKey()}</td>
-            <td>${Arrays.toString(item.getValue())}</td>
+            <td>${item.key}</td>
+            <td>${Arrays.toString(item.value)}</td>
+        </tr>
+    </c:forEach>
+</table>
+
+<b>Cookies</b>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Max age</th>
+        <th>Domain</th>
+        <th>Path</th>
+        <th>HTTP only</th>
+        <th>Secure</th>
+        <th>Version</th>
+    </tr>
+    <c:forEach var="item" items="${cookies}">
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.value}</td>
+            <td>${item.maxAge}</td>
+            <td>${item.domain}</td>
+            <td>${item.path}</td>
+            <td>${item.httpOnly}</td>
+            <td>${item.secure}</td>
+            <td>${item.version}</td>
         </tr>
     </c:forEach>
 </table>
