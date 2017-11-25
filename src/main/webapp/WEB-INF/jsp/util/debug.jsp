@@ -1,8 +1,17 @@
 <%@ page import = "java.util.*" contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%
-    List<String> headers = Collections.list(request.getHeaderNames());
-    Map<String, String[]> parameters = request.getParameterMap();
+    List<String> headersNames = Collections.list(request.getHeaderNames());
+    SortedMap<String, String> httpHeaders = new TreeMap<>();
+    for (String h : headersNames) {
+        httpHeaders.put(h, request.getHeader(h));
+    }
+
+    Map<String, String[]> httpParameters = request.getParameterMap();
+
+    request.setAttribute("httpHeaders", httpHeaders);
+    request.setAttribute("httpParameters", httpParameters);
 %>
 
 <html>
@@ -13,28 +22,37 @@
     <title>HTTP debug JSP page. Author: Zubtsov Ruslan</title>
 </head>
 <body>
-<b>Request method: </b> <% out.print(request.getMethod()); %> <br/>
 
-<b>Headers number: </b> <% out.print(headers.size()); %> <br/>
-<b>Parameters number: </b> <% out.print(parameters.size()); %> <br/>
+<table>
+    <tr>
+        <th>Characteristic</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Request method: </td>
+        <td> <%=request.getMethod()%> </td>
+    </tr>
+    <tr>
+        <td>Headers number: </td>
+        <td><%=httpHeaders.size()%></td>
+    <tr>
+    <tr>
+        <td>Parameters number: </td>
+        <td><%=httpParameters.size()%></td>
+    </tr>
+</table>
 
 <table>
     <tr>
         <th>Header name</th>
         <th>Header value</th>
     </tr>
-    <%
-        for (String header : headers) {
-            out.print("<tr>");
-            out.print("<td>");
-            out.print(header);
-            out.print("</td>");
-            out.print("<td>");
-            out.print(request.getHeader(header));
-            out.print("</td>");
-            out.print("</tr>");
-        }
-    %>
+    <c:forEach var="item" items="${httpHeaders.entrySet()}">
+        <tr>
+            <td>${item.getKey()}</td>
+            <td>${item.getValue()}</td>
+        </tr>
+    </c:forEach>
 </table>
 
 <table>
@@ -42,18 +60,12 @@
         <th>Parameter name</th>
         <th>Parameter values</th>
     </tr>
-    <%
-        for (Map.Entry<String,String[]> parameter : parameters.entrySet()) {
-            out.print("<tr>");
-            out.print("<td>");
-            out.print(parameter.getKey());
-            out.print("</td>");
-            out.print("<td>");
-            out.print(Arrays.toString(parameter.getValue()));
-            out.print("</td>");
-            out.print("</tr>");
-        }
-    %>
+    <c:forEach var="item" items="${httpParameters.entrySet()}">
+        <tr>
+            <td>${item.getKey()}</td>
+            <td>${Arrays.toString(item.getValue())}</td>
+        </tr>
+    </c:forEach>
 </table>
 
 </body>

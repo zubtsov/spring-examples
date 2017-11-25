@@ -1,4 +1,4 @@
-package com.zubtsov.spring.mvc;
+package com.zubtsov.spring.mvc.httptrace;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

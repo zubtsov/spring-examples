@@ -1,11 +1,10 @@
-package com.zubtsov.spring.mvc;
+package com.zubtsov.spring.mvc.httptrace;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-public class HelloWorldController {
+@org.springframework.stereotype.Controller
+public class Controller {
     @RequestMapping("debug")
     public ModelAndView debugHttp() {
         return new ModelAndView("debug");

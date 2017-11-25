@@ -1,4 +1,4 @@
-package com.zubtsov.spring.mvc;
+package com.zubtsov.spring.mvc.httptrace;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -11,13 +11,13 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
         XmlWebApplicationContext appContext = new XmlWebApplicationContext();
-        appContext.setConfigLocation("/WEB-INF/spring/dispatcher-config.xml");
+        appContext.setConfigLocation("/WEB-INF/spring/servlet-config.xml");
 
         DispatcherServlet servlet = new DispatcherServlet(appContext);
 
-        ServletRegistration.Dynamic registration = servletContext.addServlet("zubtsov2", servlet);
+        ServletRegistration.Dynamic registration = servletContext.addServlet("debugHttpServlet", servlet);
         registration.setLoadOnStartup(1);
-        registration.addMapping("/dynamic/*");
+        registration.addMapping("/util/*");
 
 //        registration = servletContext.addServlet("debugHttpServlet", new DebugHttpServlet());
 //        registration.setLoadOnStartup(1);
