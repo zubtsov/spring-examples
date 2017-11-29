@@ -1,22 +1,6 @@
 <%@ page import = "java.util.*" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-    List<String> headersNames = Collections.list(request.getHeaderNames());
-    SortedMap<String, String> httpHeaders = new TreeMap<>();
-    for (String h : headersNames) {
-        httpHeaders.put(h, request.getHeader(h));
-    }
-
-    Map<String, String[]> httpParameters = request.getParameterMap();
-
-    Cookie[] cookies = request.getCookies();
-
-    request.setAttribute("httpHeaders", httpHeaders);
-    request.setAttribute("httpParameters", httpParameters);
-    request.setAttribute("cookies", cookies);
-%>
-
 <html>
 <head>
     <style>
@@ -26,7 +10,7 @@
 </head>
 <body>
 
-<b>Characteristics</b>
+<b>HTTP characteristics</b>
 <table>
     <tr>
         <th>Characteristic</th>
@@ -38,15 +22,19 @@
     </tr>
     <tr>
         <td>Headers number: </td>
-        <td><%=httpHeaders.size()%></td>
+        <td>${httpHeaders.size()}</td>
     <tr>
     <tr>
         <td>Parameters number: </td>
-        <td><%=httpParameters.size()%></td>
+        <td>${httpParameters.size()}</td>
     </tr>
+</table>
+
+<b>Servlet request characteristics</b>
+<table>
     <tr>
-        <td>Auth type</td>
-        <td><%=request.getAuthType()%></td>
+        <th>Characteristic</th>
+        <th>Value</th>
     </tr>
     <tr>
         <td>Context path</td>
@@ -61,12 +49,28 @@
         <td><%=request.getPathInfo()%></td>
     </tr>
     <tr>
+        <td>Servlet path</td>
+        <td><%=request.getServletPath()%></td>
+    </tr>
+    <tr>
         <td>Query string</td>
         <td><%=request.getQueryString()%></td>
     </tr>
     <tr>
         <td>Remote user</td>
         <td><%=request.getRemoteUser()%></td>
+    </tr>
+    <tr>
+        <td>Auth type</td>
+        <td><%=request.getAuthType()%></td>
+    </tr>
+    <tr>
+        <td>Request URI</td>
+        <td><%=request.getRequestURI()%></td>
+    </tr>
+    <tr>
+        <td>Request URL</td>
+        <td><%=request.getRequestURL()%></td>
     </tr>
 </table>
 
