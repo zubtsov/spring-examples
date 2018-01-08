@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'war'
 
 group = 'com.zubtsov.spring'
 version = '1.0-SNAPSHOT'
@@ -8,8 +8,6 @@ description = "Spring samples by Ruslan Zubtsov"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-
 
 repositories {
     mavenCentral()
